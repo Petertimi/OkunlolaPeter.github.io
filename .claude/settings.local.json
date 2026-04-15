@@ -1,0 +1,9 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cmd /c copy:*)",
+      "Bash(cmd /c dir \"c:\\\\Users\\\\Petertimi\\\\Documents\\\\OkunlolaPeter.github.io\\\\images\\\\pic6.jpg\")",
+      "Bash(powershell -Command:*)"
+    ]
+  }
+}
