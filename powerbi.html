@@ -1,0 +1,422 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Power BI Portfolio - Okunlola Peter Mayowa</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* Power BI Portfolio Styles */
+			.pbi-hero {
+				background: linear-gradient(135deg, #1a1a2e 0%, #1e3a5f 50%, #0d2137 100%);
+				padding: 4em 2em 3em;
+				text-align: center;
+				border-bottom: 4px solid #f2c811;
+			}
+			.pbi-hero h1 {
+				font-size: 2.5em;
+				margin-bottom: 0.3em;
+				background: linear-gradient(135deg, #f2c811, #e8a800);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+			.pbi-hero p {
+				color: #94a3b8;
+				font-size: 1.1em;
+				max-width: 650px;
+				margin: 0 auto;
+			}
+			.stats-row {
+				display: flex;
+				justify-content: center;
+				gap: 2em;
+				margin-top: 2em;
+				flex-wrap: wrap;
+			}
+			.stat-box {
+				background: rgba(255,255,255,0.05);
+				border: 1px solid rgba(255,255,255,0.1);
+				border-radius: 12px;
+				padding: 1.2em 2em;
+				text-align: center;
+				min-width: 140px;
+			}
+			.stat-box .number {
+				font-size: 2em;
+				font-weight: 700;
+				color: #f2c811;
+				display: block;
+			}
+			.stat-box .label {
+				font-size: 0.85em;
+				color: #94a3b8;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+			}
+
+			/* Dashboard Container */
+			.dashboard-section {
+				background: #111827;
+				padding: 3em 2em;
+			}
+			.dashboard-grid {
+				max-width: 1200px;
+				margin: 0 auto;
+				display: flex;
+				flex-direction: column;
+				gap: 3em;
+			}
+			.dashboard-card {
+				background: #1e293b;
+				border-radius: 16px;
+				padding: 2em;
+				border: 1px solid #334155;
+				transition: transform 0.3s, box-shadow 0.3s;
+			}
+			.dashboard-card:hover {
+				transform: translateY(-4px);
+				box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+			}
+			.dashboard-header {
+				display: flex;
+				justify-content: space-between;
+				align-items: flex-start;
+				margin-bottom: 1.5em;
+				flex-wrap: wrap;
+				gap: 1em;
+			}
+			.dashboard-header h3 {
+				color: #f2c811;
+				font-size: 1.4em;
+				margin: 0;
+			}
+			.dashboard-header .badge {
+				background: rgba(242, 200, 17, 0.15);
+				color: #f2c811;
+				padding: 0.4em 1em;
+				border-radius: 20px;
+				font-size: 0.8em;
+				font-weight: 600;
+			}
+			.dashboard-subtitle {
+				color: #94a3b8;
+				font-size: 1em;
+				margin-bottom: 1.5em;
+				line-height: 1.6;
+			}
+			.dashboard-image {
+				width: 100%;
+				border-radius: 8px;
+				cursor: zoom-in;
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+				border: 1px solid #334155;
+			}
+			.dashboard-image:hover {
+				box-shadow: 0 15px 50px rgba(0,0,0,0.4);
+			}
+
+			/* Insights Section */
+			.insights-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+				gap: 1em;
+				margin-top: 1.5em;
+			}
+			.insight-card {
+				background: #0f172a;
+				border-radius: 10px;
+				padding: 1.2em;
+				border-left: 3px solid #f2c811;
+			}
+			.insight-card h4 {
+				color: #e2e8f0;
+				font-size: 0.95em;
+				margin: 0 0 0.5em;
+				display: flex;
+				align-items: center;
+				gap: 0.5em;
+			}
+			.insight-card h4 .icon {
+				font-size: 1.2em;
+			}
+			.insight-card p {
+				color: #94a3b8;
+				font-size: 0.85em;
+				margin: 0;
+				line-height: 1.5;
+			}
+			.insight-card .highlight {
+				color: #f2c811;
+				font-weight: 600;
+			}
+
+			/* Skills Tags */
+			.skills-row {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5em;
+				margin-top: 1.5em;
+			}
+			.skill-tag {
+				background: rgba(242, 200, 17, 0.1);
+				color: #f2c811;
+				padding: 0.4em 0.9em;
+				border-radius: 20px;
+				font-size: 0.8em;
+				font-weight: 500;
+				border: 1px solid rgba(242, 200, 17, 0.3);
+			}
+			.skill-tag.blue {
+				background: rgba(59, 130, 246, 0.1);
+				color: #3b82f6;
+				border-color: rgba(59, 130, 246, 0.3);
+			}
+			.skill-tag.green {
+				background: rgba(34, 197, 94, 0.1);
+				color: #22c55e;
+				border-color: rgba(34, 197, 94, 0.3);
+			}
+			.skill-tag.purple {
+				background: rgba(168, 85, 247, 0.1);
+				color: #a855f7;
+				border-color: rgba(168, 85, 247, 0.3);
+			}
+			.skill-tag.orange {
+				background: rgba(249, 115, 22, 0.1);
+				color: #f97316;
+				border-color: rgba(249, 115, 22, 0.3);
+			}
+
+			/* Lightbox Modal */
+			.lightbox {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.95);
+				z-index: 10000;
+				justify-content: center;
+				align-items: center;
+				padding: 2em;
+			}
+			.lightbox.active {
+				display: flex;
+			}
+			.lightbox img {
+				max-width: 95%;
+				max-height: 90vh;
+				border-radius: 8px;
+				box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+			}
+			.lightbox-close {
+				position: absolute;
+				top: 1.5em;
+				right: 2em;
+				background: rgba(255,255,255,0.1);
+				border: none;
+				color: #fff;
+				font-size: 2em;
+				cursor: pointer;
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				transition: background 0.3s;
+			}
+			.lightbox-close:hover {
+				background: rgba(255,255,255,0.2);
+			}
+
+			/* Back Link */
+			.back-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5em;
+				color: #94a3b8;
+				padding: 1em 2em;
+				font-size: 0.95em;
+				transition: color 0.3s;
+			}
+			.back-link:hover {
+				color: #f2c811;
+			}
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				.pbi-hero h1 { font-size: 1.8em; }
+				.stats-row { gap: 1em; }
+				.stat-box { min-width: 120px; padding: 1em; }
+				.dashboard-section { padding: 2em 1em; }
+				.dashboard-card { padding: 1.5em; }
+				.dashboard-header { flex-direction: column; }
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Back Link -->
+		<a href="index.html" class="back-link">
+			<i class="fas fa-arrow-left"></i> Back to Portfolio
+		</a>
+
+		<!-- Hero Section -->
+		<div class="pbi-hero">
+			<h1>Power BI Dashboards</h1>
+			<p>Interactive data visualization and business intelligence — transforming raw data into actionable insights through compelling visual stories</p>
+
+			<div class="stats-row">
+				<div class="stat-box">
+					<span class="number">2</span>
+					<span class="label">Dashboards</span>
+				</div>
+				<div class="stat-box">
+					<span class="number">630+</span>
+					<span class="label">Survey Responses</span>
+				</div>
+				<div class="stat-box">
+					<span class="number">8</span>
+					<span class="label">Visualizations</span>
+				</div>
+				<div class="stat-box">
+					<span class="number">3</span>
+					<span class="label">Stores Analyzed</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Dashboard Section -->
+		<div class="dashboard-section">
+			<div class="dashboard-grid">
+
+				<!-- Dashboard 1: Data Professional Survey -->
+				<div class="dashboard-card">
+					<div class="dashboard-header">
+						<h3>Data Professional Survey Breakdown</h3>
+						<span class="badge">Survey Analytics</span>
+					</div>
+					<p class="dashboard-subtitle">
+						Comprehensive analysis of <strong>630 data professionals</strong> worldwide — exploring salary trends, job satisfaction, programming preferences, and career entry barriers in the data industry.
+					</p>
+
+					<img src="power bi  (1).png" alt="Data Professional Survey Dashboard" class="dashboard-image" onclick="openLightbox(this.src)">
+
+					<div class="insights-grid">
+						<div class="insight-card">
+							<h4><span class="icon">📊</span> Survey Demographics</h4>
+							<p><span class="highlight">630 respondents</span> with average age of <span class="highlight">29.87 years</span>. USA leads in participation, followed by India, UK, and Canada.</p>
+						</div>
+						<div class="insight-card">
+							<h4><span class="icon">💰</span> Salary Insights</h4>
+							<p>Data Scientists earn highest salaries, followed by Data Engineers and Architects. <span class="highlight">Data Analysts</span> show strong entry-level opportunities.</p>
+						</div>
+						<div class="insight-card">
+							<h4><span class="icon">🐍</span> Programming Trends</h4>
+							<p><span class="highlight">Python dominates</span> as the favorite language, significantly ahead of R, JavaScript, and other options.</p>
+						</div>
+						<div class="insight-card">
+							<h4><span class="icon">😐</span> Satisfaction Gap</h4>
+							<p>Work-life balance rated <span class="highlight">5.74/10</span>, but salary satisfaction only <span class="highlight">4.27/10</span> — indicating compensation concerns industry-wide.</p>
+						</div>
+					</div>
+
+					<div class="skills-row">
+						<span class="skill-tag">DAX Measures</span>
+						<span class="skill-tag blue">Gauge Charts</span>
+						<span class="skill-tag green">Donut Charts</span>
+						<span class="skill-tag purple">Stacked Bar</span>
+						<span class="skill-tag orange">Survey Analysis</span>
+					</div>
+				</div>
+
+				<!-- Dashboard 2: Store Price Comparison -->
+				<div class="dashboard-card">
+					<div class="dashboard-header">
+						<h3>Store Price Comparison Analysis</h3>
+						<span class="badge">Retail Analytics</span>
+					</div>
+					<p class="dashboard-subtitle">
+						Comparative pricing analysis across <strong>Walmart, Target, and Costco</strong> — identifying the best store for each product category to maximize consumer savings.
+					</p>
+
+					<img src="power bi  (2).png" alt="Store Price Comparison Dashboard" class="dashboard-image" onclick="openLightbox(this.src)">
+
+					<div class="insights-grid">
+						<div class="insight-card">
+							<h4><span class="icon">🏪</span> Total Spending</h4>
+							<p><span class="highlight">Walmart: $225</span> (highest) vs <span class="highlight">Costco: $210</span> (lowest). $15 savings potential by choosing the right store.</p>
+						</div>
+						<div class="insight-card">
+							<h4><span class="icon">🍚</span> Rice Prices</h4>
+							<p>Target offers best rice price at <span class="highlight">$95.24</span>, beating Costco ($97.23) and Walmart ($104.73).</p>
+						</div>
+						<div class="insight-card">
+							<h4><span class="icon">💧</span> Bottled Water</h4>
+							<p>Costco wins decisively at <span class="highlight">$18.43</span> — saving $3 vs Walmart ($21.45).</p>
+						</div>
+						<div class="insight-card">
+							<h4><span class="icon">🥫</span> Best Overall</h4>
+							<p>No single store wins all categories. <span class="highlight">Strategic shopping</span> across stores yields maximum savings.</p>
+						</div>
+					</div>
+
+					<div class="skills-row">
+						<span class="skill-tag">Clustered Bar Charts</span>
+						<span class="skill-tag blue">Price Analysis</span>
+						<span class="skill-tag green">Comparative Viz</span>
+						<span class="skill-tag purple">Color Coding</span>
+						<span class="skill-tag orange">Consumer Insights</span>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+		<!-- Lightbox Modal -->
+		<div class="lightbox" id="lightbox">
+			<button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+			<img src="" alt="Full size dashboard" id="lightbox-img">
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer" style="background: #0f172a; padding: 3em 2em; text-align: center;">
+			<p style="color: #64748b; margin: 0;">
+				Power BI Portfolio by <strong style="color: #e2e8f0;">Okunlola Peter Mayowa</strong><br>
+				<a href="https://www.linkedin.com/in/okunlola-peter-725454133/" style="color: #f2c811;">LinkedIn</a> &nbsp;|&nbsp;
+				<a href="https://github.com/Petertimi" style="color: #f2c811;">GitHub</a>
+			</p>
+		</footer>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script>
+			// Lightbox Functions
+			function openLightbox(src) {
+				document.getElementById('lightbox-img').src = src;
+				document.getElementById('lightbox').classList.add('active');
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeLightbox() {
+				document.getElementById('lightbox').classList.remove('active');
+				document.body.style.overflow = '';
+			}
+
+			// Close lightbox on escape key
+			document.addEventListener('keydown', function(e) {
+				if (e.key === 'Escape') closeLightbox();
+			});
+
+			// Close lightbox on background click
+			document.getElementById('lightbox').addEventListener('click', function(e) {
+				if (e.target === this) closeLightbox();
+			});
+		</script>
+
+	</body>
+</html>
