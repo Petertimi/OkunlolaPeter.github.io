@@ -1,0 +1,547 @@
+<!DOCTYPE HTML>
+<html>
+	<head>
+		<title>Excel Portfolio - Okunlola Peter Mayowa</title>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+		<link rel="stylesheet" href="assets/css/main.css" />
+		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
+		<style>
+			/* Excel Portfolio Custom Styles */
+			.excel-hero {
+				background: linear-gradient(135deg, #1a1a2e 0%, #16213e 50%, #0f3460 100%);
+				padding: 4em 2em 3em;
+				text-align: center;
+				border-bottom: 4px solid #22d3ee;
+			}
+			.excel-hero h1 {
+				font-size: 2.5em;
+				margin-bottom: 0.3em;
+				background: linear-gradient(135deg, #22d3ee, #a78bfa);
+				-webkit-background-clip: text;
+				-webkit-text-fill-color: transparent;
+				background-clip: text;
+			}
+			.excel-hero p {
+				color: #94a3b8;
+				font-size: 1.1em;
+				max-width: 600px;
+				margin: 0 auto;
+			}
+			.stats-row {
+				display: flex;
+				justify-content: center;
+				gap: 2em;
+				margin-top: 2em;
+				flex-wrap: wrap;
+			}
+			.stat-box {
+				background: rgba(255,255,255,0.05);
+				border: 1px solid rgba(255,255,255,0.1);
+				border-radius: 12px;
+				padding: 1.2em 2em;
+				text-align: center;
+				min-width: 140px;
+			}
+			.stat-box .number {
+				font-size: 2em;
+				font-weight: 700;
+				color: #22d3ee;
+				display: block;
+			}
+			.stat-box .label {
+				font-size: 0.85em;
+				color: #94a3b8;
+				text-transform: uppercase;
+				letter-spacing: 1px;
+			}
+
+			/* Tab Navigation */
+			.tab-nav {
+				display: flex;
+				justify-content: center;
+				gap: 0.5em;
+				padding: 2em 1em 1em;
+				background: #111827;
+				flex-wrap: wrap;
+			}
+			.tab-btn {
+				padding: 0.8em 1.5em;
+				border: none;
+				border-radius: 8px 8px 0 0;
+				background: transparent;
+				color: #94a3b8;
+				font-size: 0.95em;
+				font-weight: 600;
+				cursor: pointer;
+				transition: all 0.3s ease;
+				border-bottom: 3px solid transparent;
+			}
+			.tab-btn:hover {
+				color: #e2e8f0;
+				background: rgba(255,255,255,0.05);
+			}
+			.tab-btn.active {
+				color: #22d3ee;
+				background: #1e293b;
+				border-bottom-color: #22d3ee;
+			}
+
+			/* Dashboard Content */
+			.dashboard-container {
+				background: #111827;
+				padding: 2em;
+				min-height: 500px;
+			}
+			.dashboard-panel {
+				display: none;
+				animation: fadeIn 0.4s ease;
+			}
+			.dashboard-panel.active {
+				display: block;
+			}
+			@keyframes fadeIn {
+				from { opacity: 0; transform: translateY(10px); }
+				to { opacity: 1; transform: translateY(0); }
+			}
+			.dashboard-card {
+				background: #1e293b;
+				border-radius: 16px;
+				padding: 2em;
+				border: 1px solid #334155;
+				max-width: 1000px;
+				margin: 0 auto;
+			}
+			.dashboard-card h3 {
+				color: #22d3ee;
+				font-size: 1.3em;
+				margin-bottom: 0.3em;
+			}
+			.dashboard-card .subtitle {
+				color: #94a3b8;
+				font-size: 0.95em;
+				margin-bottom: 1.5em;
+			}
+			.dashboard-image {
+				width: 100%;
+				border-radius: 8px;
+				cursor: zoom-in;
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+				border: 1px solid #334155;
+			}
+			.dashboard-image:hover {
+				transform: scale(1.02);
+				box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+			}
+
+			/* Skills Tags */
+			.skills-row {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 0.5em;
+				margin-top: 1.5em;
+			}
+			.skill-tag {
+				background: rgba(34, 211, 238, 0.1);
+				color: #22d3ee;
+				padding: 0.4em 0.9em;
+				border-radius: 20px;
+				font-size: 0.8em;
+				font-weight: 500;
+				border: 1px solid rgba(34, 211, 238, 0.3);
+			}
+			.skill-tag.purple {
+				background: rgba(167, 139, 250, 0.1);
+				color: #a78bfa;
+				border-color: rgba(167, 139, 250, 0.3);
+			}
+			.skill-tag.green {
+				background: rgba(52, 211, 153, 0.1);
+				color: #34d399;
+				border-color: rgba(52, 211, 153, 0.3);
+			}
+			.skill-tag.orange {
+				background: rgba(251, 146, 60, 0.1);
+				color: #fb923c;
+				border-color: rgba(251, 146, 60, 0.3);
+			}
+
+			/* Download Button */
+			.download-btn {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5em;
+				margin-top: 1.5em;
+				padding: 0.7em 1.3em;
+				background: linear-gradient(135deg, #22d3ee, #0891b2);
+				color: #fff;
+				border-radius: 8px;
+				font-size: 0.9em;
+				font-weight: 600;
+				text-decoration: none;
+				transition: transform 0.2s, box-shadow 0.2s;
+			}
+			.download-btn:hover {
+				transform: translateY(-2px);
+				box-shadow: 0 8px 25px rgba(34, 211, 238, 0.3);
+				color: #fff;
+			}
+
+			/* Lightbox Modal */
+			.lightbox {
+				display: none;
+				position: fixed;
+				top: 0;
+				left: 0;
+				width: 100%;
+				height: 100%;
+				background: rgba(0,0,0,0.95);
+				z-index: 10000;
+				justify-content: center;
+				align-items: center;
+				padding: 2em;
+			}
+			.lightbox.active {
+				display: flex;
+			}
+			.lightbox img {
+				max-width: 95%;
+				max-height: 90vh;
+				border-radius: 8px;
+				box-shadow: 0 25px 80px rgba(0,0,0,0.5);
+			}
+			.lightbox-close {
+				position: absolute;
+				top: 1.5em;
+				right: 2em;
+				background: rgba(255,255,255,0.1);
+				border: none;
+				color: #fff;
+				font-size: 2em;
+				cursor: pointer;
+				width: 50px;
+				height: 50px;
+				border-radius: 50%;
+				transition: background 0.3s;
+			}
+			.lightbox-close:hover {
+				background: rgba(255,255,255,0.2);
+			}
+
+			/* Formula Showcase */
+			.formula-grid {
+				display: grid;
+				grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+				gap: 1em;
+				margin-top: 2em;
+			}
+			.formula-card {
+				background: #0f172a;
+				border-radius: 10px;
+				padding: 1.2em;
+				border-left: 3px solid #22d3ee;
+			}
+			.formula-card h4 {
+				color: #e2e8f0;
+				font-size: 1em;
+				margin-bottom: 0.5em;
+			}
+			.formula-card code {
+				display: block;
+				background: #1e293b;
+				color: #22d3ee;
+				padding: 0.6em 0.8em;
+				border-radius: 6px;
+				font-size: 0.85em;
+				margin-bottom: 0.5em;
+				overflow-x: auto;
+			}
+			.formula-card p {
+				color: #94a3b8;
+				font-size: 0.85em;
+				margin: 0;
+			}
+
+			/* Back Link */
+			.back-link {
+				display: inline-flex;
+				align-items: center;
+				gap: 0.5em;
+				color: #94a3b8;
+				padding: 1em 2em;
+				font-size: 0.95em;
+				transition: color 0.3s;
+			}
+			.back-link:hover {
+				color: #22d3ee;
+			}
+
+			/* Responsive */
+			@media (max-width: 768px) {
+				.excel-hero h1 { font-size: 1.8em; }
+				.stats-row { gap: 1em; }
+				.stat-box { min-width: 120px; padding: 1em; }
+				.tab-btn { padding: 0.6em 1em; font-size: 0.85em; }
+				.dashboard-container { padding: 1em; }
+				.dashboard-card { padding: 1.5em; }
+			}
+		</style>
+	</head>
+	<body class="is-preload">
+
+		<!-- Back Link -->
+		<a href="index.html" class="back-link">
+			<i class="fas fa-arrow-left"></i> Back to Portfolio
+		</a>
+
+		<!-- Hero Section -->
+		<div class="excel-hero">
+			<h1>Excel & Data Analytics Portfolio</h1>
+			<p>Interactive showcase of advanced Excel skills — pivot tables, SUMIF, XLOOKUP, dashboards, and data visualization</p>
+
+			<div class="stats-row">
+				<div class="stat-box">
+					<span class="number">4</span>
+					<span class="label">Dashboards</span>
+				</div>
+				<div class="stat-box">
+					<span class="number">2,900+</span>
+					<span class="label">Data Rows</span>
+				</div>
+				<div class="stat-box">
+					<span class="number">20+</span>
+					<span class="label">Functions</span>
+				</div>
+				<div class="stat-box">
+					<span class="number">21</span>
+					<span class="label">Countries</span>
+				</div>
+			</div>
+		</div>
+
+		<!-- Tab Navigation -->
+		<div class="tab-nav">
+			<button class="tab-btn active" data-tab="sales">Sales Performance</button>
+			<button class="tab-btn" data-tab="store">Store Analysis</button>
+			<button class="tab-btn" data-tab="orders">Order Analytics</button>
+			<button class="tab-btn" data-tab="products">Product Intelligence</button>
+		</div>
+
+		<!-- Dashboard Content -->
+		<div class="dashboard-container">
+
+			<!-- Sales Dashboard -->
+			<div class="dashboard-panel active" id="sales">
+				<div class="dashboard-card">
+					<h3>Sales Performance Dashboard</h3>
+					<p class="subtitle">December 2020 — Tracking 5 salespeople against $34,000 monthly goal</p>
+
+					<img src="sales_dashboard.png" alt="Sales Performance Dashboard" class="dashboard-image" onclick="openLightbox(this.src)">
+
+					<div class="skills-row">
+						<span class="skill-tag">IF Function</span>
+						<span class="skill-tag">SUM</span>
+						<span class="skill-tag purple">Goal Tracking</span>
+						<span class="skill-tag green">Conditional Logic</span>
+						<span class="skill-tag orange">COUNTIF</span>
+					</div>
+
+					<div class="formula-grid">
+						<div class="formula-card">
+							<h4>Total Sales Calculation</h4>
+							<code>=SUM(B5:E5)</code>
+							<p>Sums weekly sales for each salesperson</p>
+						</div>
+						<div class="formula-card">
+							<h4>Goal Check</h4>
+							<code>=IF(F5>=$I$2,"YES","NO")</code>
+							<p>Compares total against $34,000 goal</p>
+						</div>
+						<div class="formula-card">
+							<h4>Achievement Count</h4>
+							<code>=COUNTIF(G5:G9,"YES")</code>
+							<p>Counts salespeople who hit target</p>
+						</div>
+					</div>
+
+					<a href="sales_dashboard.xlsx" download class="download-btn">
+						<i class="fas fa-download"></i> Download Excel File
+					</a>
+				</div>
+			</div>
+
+			<!-- Store Analysis -->
+			<div class="dashboard-panel" id="store">
+				<div class="dashboard-card">
+					<h3>Store Performance Summary</h3>
+					<p class="subtitle">SUMIF Analysis — Aggregating 270 transaction rows across 6 stores</p>
+
+					<img src="store_analysis.png" alt="Store Performance Analysis" class="dashboard-image" onclick="openLightbox(this.src)">
+
+					<div class="skills-row">
+						<span class="skill-tag">SUMIF</span>
+						<span class="skill-tag purple">Multi-Store Reporting</span>
+						<span class="skill-tag green">Data Aggregation</span>
+						<span class="skill-tag orange">Bar Charts</span>
+					</div>
+
+					<div class="formula-grid">
+						<div class="formula-card">
+							<h4>Store Total (SUMIF)</h4>
+							<code>=SUMIF(B3:B272,G3,E3:E272)</code>
+							<p>Aggregates sales by store number across 270 rows</p>
+						</div>
+						<div class="formula-card">
+							<h4>Monthly Breakdown</h4>
+							<code>=SUMIFS(E:E,B:B,G3,D:D,"January")</code>
+							<p>Filters by store AND month for granular analysis</p>
+						</div>
+					</div>
+
+					<a href="store_analysis.xlsx" download class="download-btn">
+						<i class="fas fa-download"></i> Download Excel File
+					</a>
+				</div>
+			</div>
+
+			<!-- Order Analytics -->
+			<div class="dashboard-panel" id="orders">
+				<div class="dashboard-card">
+					<h3>Order Analytics — Pivot Table Summary</h3>
+					<p class="subtitle">830 Orders across 21 countries — Jul 1996 to May 1998</p>
+
+					<img src="order_analytics.png" alt="Order Analytics Dashboard" class="dashboard-image" onclick="openLightbox(this.src)">
+
+					<div class="skills-row">
+						<span class="skill-tag">Pivot Tables</span>
+						<span class="skill-tag purple">XLOOKUP</span>
+						<span class="skill-tag green">Data Modeling</span>
+						<span class="skill-tag orange">% of Total</span>
+						<span class="skill-tag">Freight Analysis</span>
+					</div>
+
+					<div class="formula-grid">
+						<div class="formula-card">
+							<h4>Dynamic Lookup</h4>
+							<code>=XLOOKUP(A2,Orders!A:A,Orders!G:G)</code>
+							<p>Links 830 orders to shipping data</p>
+						</div>
+						<div class="formula-card">
+							<h4>Average Freight</h4>
+							<code>=AVERAGEIF(B:B,"Germany",F:F)</code>
+							<p>Calculates avg freight by country</p>
+						</div>
+						<div class="formula-card">
+							<h4>Percentage Share</h4>
+							<code>=B2/SUM($B$2:$B$22)</code>
+							<p>Shows each country's order share</p>
+						</div>
+					</div>
+
+					<a href="order_analytics.xlsx" download class="download-btn">
+						<i class="fas fa-download"></i> Download Excel File
+					</a>
+				</div>
+			</div>
+
+			<!-- Product Intelligence -->
+			<div class="dashboard-panel" id="products">
+				<div class="dashboard-card">
+					<h3>Product Category Analysis</h3>
+					<p class="subtitle">Pivot Table Dashboard — 77 products across 8 categories</p>
+
+					<img src="product_dashboard.png" alt="Product Dashboard" class="dashboard-image" onclick="openLightbox(this.src)">
+
+					<div class="skills-row">
+						<span class="skill-tag">Pivot Tables</span>
+						<span class="skill-tag purple">AVERAGEIF</span>
+						<span class="skill-tag green">Inventory Tracking</span>
+						<span class="skill-tag orange">Data Visualization</span>
+						<span class="skill-tag">Stock Analysis</span>
+					</div>
+
+					<div class="formula-grid">
+						<div class="formula-card">
+							<h4>Category Average</h4>
+							<code>=AVERAGEIF(A:A,"Beverages",C:C)</code>
+							<p>Avg unit price per product category</p>
+						</div>
+						<div class="formula-card">
+							<h4>Stock Status</h4>
+							<code>=IF(D2<E2,"Reorder","OK")</code>
+							<p>Flags products needing reorder</p>
+						</div>
+						<div class="formula-card">
+							<h4>Total Products</h4>
+							<code>=COUNTA(A:A)-1</code>
+							<p>Counts all products in catalog</p>
+						</div>
+					</div>
+
+					<a href="product_dashboard.xlsx" download class="download-btn">
+						<i class="fas fa-download"></i> Download Excel File
+					</a>
+				</div>
+			</div>
+
+		</div>
+
+		<!-- Lightbox Modal -->
+		<div class="lightbox" id="lightbox">
+			<button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+			<img src="" alt="Full size dashboard" id="lightbox-img">
+		</div>
+
+		<!-- Footer -->
+		<footer id="footer" style="background: #0f172a; padding: 3em 2em; text-align: center;">
+			<p style="color: #64748b; margin: 0;">
+				Excel Portfolio by <strong style="color: #e2e8f0;">Okunlola Peter Mayowa</strong><br>
+				<a href="https://www.linkedin.com/in/okunlola-peter-725454133/" style="color: #22d3ee;">LinkedIn</a> &nbsp;|&nbsp;
+				<a href="https://github.com/Petertimi" style="color: #22d3ee;">GitHub</a>
+			</p>
+		</footer>
+
+		<!-- Scripts -->
+		<script src="assets/js/jquery.min.js"></script>
+		<script src="assets/js/browser.min.js"></script>
+		<script src="assets/js/breakpoints.min.js"></script>
+		<script src="assets/js/util.js"></script>
+		<script>
+			// Tab Switching
+			document.querySelectorAll('.tab-btn').forEach(btn => {
+				btn.addEventListener('click', function() {
+					// Remove active from all tabs and panels
+					document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+					document.querySelectorAll('.dashboard-panel').forEach(p => p.classList.remove('active'));
+
+					// Add active to clicked tab and corresponding panel
+					this.classList.add('active');
+					document.getElementById(this.dataset.tab).classList.add('active');
+				});
+			});
+
+			// Lightbox Functions
+			function openLightbox(src) {
+				document.getElementById('lightbox-img').src = src;
+				document.getElementById('lightbox').classList.add('active');
+				document.body.style.overflow = 'hidden';
+			}
+
+			function closeLightbox() {
+				document.getElementById('lightbox').classList.remove('active');
+				document.body.style.overflow = '';
+			}
+
+			// Close lightbox on escape key
+			document.addEventListener('keydown', function(e) {
+				if (e.key === 'Escape') closeLightbox();
+			});
+
+			// Close lightbox on background click
+			document.getElementById('lightbox').addEventListener('click', function(e) {
+				if (e.target === this) closeLightbox();
+			});
+		</script>
+
+	</body>
+</html>
