@@ -1,0 +1,1104 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>Solar Sustainability — Infographic Wireframes</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Caveat:wght@400;500;700&family=Kalam:wght@300;400;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#1a1a1a;
+    --ink-soft:#2a2a2a;
+    --pencil:#5a5a5a;
+    --pencil-light:#9a9a9a;
+    --paper:#fafaf6;
+    --paper-warm:#f4f1e8;
+    --rule:#cfcdc3;
+    --accent: oklch(0.72 0.12 145);     /* muted solar green */
+    --accent-soft: oklch(0.92 0.05 145);
+    --sun: oklch(0.82 0.14 85);          /* dim sun yellow */
+    --sun-soft: oklch(0.95 0.06 85);
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0;background:#e9e7df;color:var(--ink);font-family:"Kalam",system-ui,sans-serif}
+
+  /* -------- App chrome -------- */
+  .app{min-height:100vh;display:flex;flex-direction:column}
+  .topbar{
+    position:sticky;top:0;z-index:40;
+    display:flex;align-items:center;gap:18px;
+    padding:14px 22px;background:#111;color:#f4f1e8;
+    border-bottom:1px solid #000;
+  }
+  .topbar h1{
+    margin:0;font-family:"Caveat",cursive;font-weight:700;font-size:26px;letter-spacing:.3px;
+  }
+  .topbar .sub{font-family:"JetBrains Mono",monospace;font-size:11px;opacity:.6;text-transform:uppercase;letter-spacing:.18em}
+  .tabs{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+  .tab{
+    font-family:"Kalam",sans-serif;font-size:14px;
+    background:transparent;color:#d8d4c4;border:1px dashed #4a4a4a;border-radius:999px;
+    padding:7px 14px;cursor:pointer;transition:.15s;
+  }
+  .tab:hover{color:#fff;border-color:#888}
+  .tab.active{background:#f4f1e8;color:#111;border-color:#f4f1e8;border-style:solid}
+
+  /* -------- Stage -------- */
+  .stage{flex:1;padding:30px 20px 80px;display:flex;justify-content:center;align-items:flex-start}
+  .page{
+    width: 820px;                /* ~ letter portrait at a readable zoom */
+    min-height: 1060px;
+    background:var(--paper);
+    border:1px solid #bdbbb0;
+    box-shadow: 2px 3px 0 #00000010, 14px 22px 40px #0000001f;
+    position:relative;
+    overflow:hidden;
+  }
+  .page::before{
+    /* faint grid paper */
+    content:"";position:absolute;inset:0;pointer-events:none;
+    background-image:
+      linear-gradient(to right, #00000008 1px, transparent 1px),
+      linear-gradient(to bottom, #00000008 1px, transparent 1px);
+    background-size: 24px 24px;
+  }
+  .panel{display:none}
+  .panel.active{display:block}
+
+  /* -------- Sketchy primitives -------- */
+  .hand{font-family:"Caveat",cursive}
+  .mono{font-family:"JetBrains Mono",monospace;letter-spacing:.02em}
+  .title{font-family:"Kalam",sans-serif;font-weight:700;letter-spacing:-.01em}
+  .muted{color:var(--pencil)}
+  .faint{color:var(--pencil-light)}
+  .chip{
+    display:inline-block;font-family:"JetBrains Mono",monospace;font-size:10px;
+    padding:3px 8px;border:1px solid var(--ink);border-radius:999px;
+    text-transform:uppercase;letter-spacing:.14em;background:var(--paper);
+  }
+  .chip.green{background:var(--accent-soft);border-color:#4a6b4a}
+  .chip.sun{background:var(--sun-soft);border-color:#8b6b2a}
+  .rule{height:1px;background:var(--ink);border:none;margin:0}
+  .rule.dash{height:0;border-top:1px dashed var(--pencil)}
+  .rule.double{height:4px;border-top:1px solid var(--ink);border-bottom:1px solid var(--ink);background:transparent}
+
+  /* scribble box (image placeholder) */
+  .scribble{
+    position:relative;background:var(--paper-warm);
+    border:1.5px solid var(--ink);
+    background-image: repeating-linear-gradient(
+      -45deg, transparent 0 10px, #00000012 10px 11px
+    );
+    display:flex;align-items:center;justify-content:center;
+    font-family:"JetBrains Mono",monospace;font-size:11px;color:var(--pencil);
+    text-align:center;text-transform:uppercase;letter-spacing:.15em;
+  }
+  .scribble.green{
+    background-color:var(--accent-soft);
+    background-image: repeating-linear-gradient(-45deg, transparent 0 10px, #2b4a2b22 10px 11px);
+    border-color:#2b4a2b;
+  }
+
+  /* hand-drawn bar */
+  .bar{height:10px;background:var(--ink);border-radius:2px;position:relative}
+  .bar.open{background:transparent;border:1.5px solid var(--ink)}
+  .bar.accent{background:var(--accent)}
+
+  /* big stat */
+  .stat .num{font-family:"Kalam",sans-serif;font-weight:700;line-height:.95;letter-spacing:-.03em}
+  .stat .unit{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--pencil)}
+  .stat .lbl{font-family:"Caveat",cursive;font-size:18px;color:var(--ink)}
+
+  /* annotation arrow */
+  .note{position:absolute;font-family:"Caveat",cursive;color:var(--pencil);font-size:15px;max-width:140px;line-height:1.1}
+  .note svg{overflow:visible}
+
+  /* ------- Shared page header ------- */
+  .paper-head{
+    position:relative;padding:34px 44px 22px;border-bottom:1.5px solid var(--ink);
+  }
+  .paper-head .kicker{display:flex;gap:8px;align-items:center;margin-bottom:10px}
+  .paper-head h2{margin:0;font-size:44px;line-height:1;letter-spacing:-.02em}
+  .paper-head p{margin:10px 0 0;font-family:"Kalam",sans-serif;font-weight:300;color:var(--ink-soft);font-size:15px;max-width:640px}
+  .corner-mark{position:absolute;top:20px;right:24px;font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.18em;color:var(--pencil);text-transform:uppercase}
+
+  /* =====================================================================
+     VARIATION 1 — STAT GRID DASHBOARD
+     ===================================================================== */
+  .v1-body{padding:28px 44px 40px;position:relative;z-index:1}
+  .v1-hero{
+    display:grid;grid-template-columns: 1.2fr 1fr;gap:26px;margin-bottom:28px;align-items:stretch;
+  }
+  .v1-hero .headline{font-family:"Kalam",sans-serif;font-weight:700;font-size:36px;line-height:1.05;letter-spacing:-.02em}
+  .v1-hero .headline em{font-style:normal;background:var(--accent);padding:0 6px;border-radius:3px;color:#0a1a0a}
+  .v1-hero .sub{font-family:"Kalam",sans-serif;font-weight:300;font-size:14px;color:var(--pencil);margin-top:14px;line-height:1.4}
+  .v1-donut{position:relative}
+  .v1-donut svg{width:100%;height:auto;display:block}
+  .grid-4{display:grid;grid-template-columns:repeat(4,1fr);gap:0;border-top:1.5px solid var(--ink);border-bottom:1.5px solid var(--ink)}
+  .grid-4 .cell{padding:18px 14px 16px;border-right:1px dashed var(--pencil-light);position:relative}
+  .grid-4 .cell:last-child{border-right:none}
+  .grid-4 .num{font-size:42px}
+  .grid-4 .delta{font-family:"JetBrains Mono",monospace;font-size:10px;color:#2b6a2b;margin-top:6px;letter-spacing:.1em}
+  .v1-charts{display:grid;grid-template-columns: 1.3fr 1fr;gap:22px;margin-top:26px}
+  .chart-card{border:1.5px solid var(--ink);padding:16px 18px 20px;background:var(--paper);position:relative}
+  .chart-card h3{margin:0 0 12px;font-size:15px;font-family:"Kalam",sans-serif;font-weight:700;letter-spacing:-.01em}
+  .chart-card .cap{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--pencil)}
+  .bar-rows{display:flex;flex-direction:column;gap:10px;margin-top:10px}
+  .bar-row{display:grid;grid-template-columns:70px 1fr 50px;gap:10px;align-items:center;font-size:12px}
+  .bar-row .lbl{font-family:"Caveat",cursive;font-size:16px}
+  .bar-row .val{font-family:"JetBrains Mono",monospace;text-align:right;font-size:11px}
+  .bar-track{height:14px;background:#0000000a;border:1px solid var(--ink);position:relative}
+  .bar-fill{height:100%;background:var(--accent)}
+  .v1-foot{margin-top:22px;display:flex;justify-content:space-between;align-items:flex-end;gap:20px}
+  .v1-foot .pledge{flex:1;border:1.5px dashed var(--ink);padding:14px 18px;background:var(--sun-soft)}
+  .v1-foot .pledge .hand{font-size:22px;line-height:1.15}
+  .v1-foot .sig{font-family:"Caveat",cursive;font-size:20px;color:var(--ink);text-align:right;min-width:160px}
+  .v1-foot .sig small{display:block;font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.14em;color:var(--pencil);text-transform:uppercase;margin-top:4px}
+
+  /* =====================================================================
+     VARIATION 2 — EDITORIAL SPLIT (big number hero)
+     ===================================================================== */
+  .v2-hero{display:grid;grid-template-columns: 1fr 1fr;min-height:360px;border-bottom:1.5px solid var(--ink)}
+  .v2-hero .left{padding:38px 38px 28px;display:flex;flex-direction:column;justify-content:space-between;border-right:1.5px solid var(--ink)}
+  .v2-hero .left .big{font-family:"Kalam",sans-serif;font-weight:700;font-size:150px;line-height:.82;letter-spacing:-.05em}
+  .v2-hero .left .big sup{font-size:40px;vertical-align:super;font-weight:400}
+  .v2-hero .left .u{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--pencil);margin-top:10px}
+  .v2-hero .left .blurb{font-family:"Kalam",sans-serif;font-weight:300;font-size:15px;line-height:1.35;max-width:300px;margin-top:20px}
+  .v2-hero .right{position:relative;padding:24px;background:var(--accent-soft)}
+  .v2-hero .right .scribble{position:absolute;inset:24px}
+  .v2-stats{display:grid;grid-template-columns:repeat(3,1fr);border-bottom:1.5px solid var(--ink)}
+  .v2-stats .c{padding:22px 24px;border-right:1px dashed var(--pencil);position:relative}
+  .v2-stats .c:last-child{border-right:none}
+  .v2-stats .num{font-size:44px}
+  .v2-stats .arrow{position:absolute;top:14px;right:14px;font-family:"JetBrains Mono",monospace;font-size:10px;color:#2b6a2b;letter-spacing:.12em}
+  .v2-body{padding:30px 40px 40px;display:grid;grid-template-columns:1.2fr 1fr;gap:32px}
+  .v2-body h3{margin:0 0 12px;font-size:15px;font-family:"Kalam",sans-serif;font-weight:700;letter-spacing:-.01em}
+  .v2-lede{font-family:"Kalam",sans-serif;font-weight:300;font-size:14px;line-height:1.5;color:var(--ink-soft)}
+  .v2-lede p{margin:0 0 10px}
+  .v2-lede .drop{float:left;font-family:"Kalam",sans-serif;font-weight:700;font-size:46px;line-height:.85;padding:4px 10px 0 0;color:var(--ink)}
+  .v2-side .row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px dashed var(--pencil-light);font-family:"JetBrains Mono",monospace;font-size:11px}
+  .v2-side .row .k{letter-spacing:.14em;text-transform:uppercase;color:var(--pencil)}
+  .v2-side .row .v{font-family:"Kalam",sans-serif;font-weight:700;font-size:16px;color:var(--ink)}
+
+  /* =====================================================================
+     VARIATION 3 — TIMELINE / JOURNEY
+     ===================================================================== */
+  .v3-body{padding:30px 44px 40px;position:relative;z-index:1}
+  .v3-top{display:grid;grid-template-columns: 1.1fr 1fr 1fr;gap:16px;margin-bottom:24px}
+  .v3-top .cell{border:1.5px solid var(--ink);padding:14px 16px;background:var(--paper)}
+  .v3-top .cell.hero{background:var(--accent-soft)}
+  .v3-top .num{font-size:38px}
+  .v3-track{position:relative;padding:28px 20px 20px;border:1.5px solid var(--ink);background:var(--paper)}
+  .v3-track h3{margin:0 0 18px;font-family:"Caveat",cursive;font-size:26px}
+  .v3-line{position:relative;height:6px;background:var(--ink);margin:50px 30px 60px}
+  .v3-node{position:absolute;top:-10px;width:26px;height:26px;border-radius:50%;background:var(--paper);border:2px solid var(--ink);transform:translateX(-50%);display:flex;align-items:center;justify-content:center;font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:700}
+  .v3-node.filled{background:var(--accent);border-color:#2b4a2b}
+  .v3-node.sun{background:var(--sun);border-color:#6a4a10}
+  .v3-label{position:absolute;width:150px;text-align:center;transform:translateX(-50%)}
+  .v3-label.above{top:-58px}
+  .v3-label.below{top:28px}
+  .v3-label .y{font-family:"JetBrains Mono",monospace;font-size:11px;letter-spacing:.18em;color:var(--pencil)}
+  .v3-label .h{font-family:"Kalam",sans-serif;font-weight:700;font-size:14px;margin-top:2px;line-height:1.15}
+  .v3-label .n{font-family:"Caveat",cursive;font-size:14px;color:var(--pencil-light);margin-top:2px;line-height:1.1}
+  .v3-impact{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:24px}
+  .v3-impact .c{border-top:2px solid var(--ink);padding-top:10px}
+  .v3-impact .num{font-size:32px}
+  .v3-impact .l{font-family:"Caveat",cursive;font-size:16px;color:var(--pencil)}
+  .v3-impact .u{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--pencil);margin-top:2px}
+
+  /* =====================================================================
+     VARIATION 4 — INVESTOR BRIEF (report page style)
+     ===================================================================== */
+  .v4-body{padding:28px 44px 40px;position:relative;z-index:1}
+  .v4-ledger{display:grid;grid-template-columns:repeat(5,1fr);border-top:2px solid var(--ink);border-bottom:1px solid var(--ink);margin-bottom:22px}
+  .v4-ledger .c{padding:14px 10px;border-right:1px solid var(--rule);text-align:left}
+  .v4-ledger .c:last-child{border-right:none}
+  .v4-ledger .k{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:var(--pencil)}
+  .v4-ledger .v{font-family:"Kalam",sans-serif;font-weight:700;font-size:22px;margin-top:4px;line-height:1}
+  .v4-ledger .n{font-family:"Caveat",cursive;font-size:14px;color:var(--pencil);margin-top:2px}
+  .v4-main{display:grid;grid-template-columns: 1.4fr 1fr;gap:22px}
+  .v4-chart{border:1.5px solid var(--ink);padding:16px 18px;background:var(--paper)}
+  .v4-chart h3{margin:0;font-size:14px;font-family:"Kalam",sans-serif;font-weight:700}
+  .v4-chart .sub{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--pencil);margin-top:2px}
+  .v4-linechart{margin-top:14px}
+  .v4-legend{display:flex;gap:16px;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--pencil)}
+  .v4-legend span{display:inline-flex;align-items:center;gap:6px}
+  .v4-legend i{width:14px;height:3px;display:inline-block}
+  .v4-side{display:flex;flex-direction:column;gap:14px}
+  .v4-card{border:1.5px solid var(--ink);padding:14px 16px;background:var(--paper)}
+  .v4-card.accent{background:var(--accent-soft)}
+  .v4-card h4{margin:0 0 6px;font-family:"Kalam",sans-serif;font-weight:700;font-size:14px}
+  .v4-card .big{font-family:"Kalam",sans-serif;font-weight:700;font-size:30px;line-height:1;letter-spacing:-.02em}
+  .v4-card .u{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.14em;color:var(--pencil);margin-top:4px;text-transform:uppercase}
+  .v4-goals{margin-top:22px;border:1.5px dashed var(--ink);padding:16px 20px;background:var(--sun-soft)}
+  .v4-goals h3{margin:0 0 10px;font-family:"Caveat",cursive;font-size:26px}
+  .v4-goals ul{list-style:none;padding:0;margin:0;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+  .v4-goals li{font-family:"Kalam",sans-serif;font-size:13px;line-height:1.3;padding-left:26px;position:relative}
+  .v4-goals li::before{
+    content:"";position:absolute;left:0;top:2px;width:16px;height:16px;
+    border:1.5px solid var(--ink);background:var(--paper);
+  }
+  .v4-goals li .y{font-family:"JetBrains Mono",monospace;font-size:10px;color:var(--pencil);letter-spacing:.14em}
+
+  /* =====================================================================
+     TWEAKS PANEL
+     ===================================================================== */
+  .tweaks{
+    position:fixed;bottom:18px;right:18px;z-index:50;
+    background:#111;color:#f4f1e8;padding:14px 16px;border-radius:8px;
+    width:248px;box-shadow:0 18px 40px #0003;
+    display:none;
+  }
+  .tweaks.open{display:block}
+  .tweaks h4{margin:0 0 10px;font-family:"Caveat",cursive;font-size:20px;display:flex;align-items:center;justify-content:space-between}
+  .tweaks h4 button{background:none;border:0;color:#d8d4c4;font-size:18px;cursor:pointer;font-family:"JetBrains Mono",monospace}
+  .tweaks .grp{margin-bottom:12px}
+  .tweaks label{font-family:"JetBrains Mono",monospace;font-size:9px;letter-spacing:.16em;color:#9a968a;text-transform:uppercase;display:block;margin-bottom:6px}
+  .tweaks .row{display:flex;gap:6px;flex-wrap:wrap}
+  .tweaks .opt{font-family:"Kalam",sans-serif;font-size:12px;background:#222;color:#ddd;border:1px dashed #444;padding:5px 10px;border-radius:99px;cursor:pointer}
+  .tweaks .opt.on{background:#f4f1e8;color:#111;border-style:solid}
+  .tweaks .swatch{width:22px;height:22px;border-radius:50%;border:2px solid #333;cursor:pointer}
+  .tweaks .swatch.on{border-color:#f4f1e8}
+  .tweak-toggle{
+    position:fixed;bottom:18px;right:18px;z-index:51;
+    background:#111;color:#f4f1e8;border:none;padding:10px 14px;border-radius:99px;
+    font-family:"Caveat",cursive;font-size:18px;cursor:pointer;box-shadow:0 10px 24px #0003;
+  }
+
+  /* density */
+  body.dense .page{transform-origin:top center}
+  body.sparse .v1-body,body.sparse .v3-body,body.sparse .v4-body{padding-top:44px;padding-bottom:60px}
+
+  /* hide icons mode */
+  body.no-icons .scribble{background-image:none;background-color:#eee}
+</style>
+</head>
+<body>
+<div class="app">
+
+  <header class="topbar">
+    <h1>Solar Sustainability · Infographic Wireframes</h1>
+    <span class="sub">v1 · low-fi · letter portrait</span>
+    <nav class="tabs" id="tabs">
+      <button class="tab active" data-t="v1">01 · Stat Grid</button>
+      <button class="tab" data-t="v2">02 · Editorial Split</button>
+      <button class="tab" data-t="v3">03 · Timeline</button>
+      <button class="tab" data-t="v4">04 · Investor Brief</button>
+      <button class="tab" data-t="v5">05 · ★ Merged</button>
+    </nav>
+  </header>
+
+  <main class="stage">
+
+    <!-- ============================================================= -->
+    <!-- VARIATION 1 — STAT GRID DASHBOARD                              -->
+    <!-- ============================================================= -->
+    <section class="page panel active" id="v1" data-screen-label="01 Stat Grid Dashboard">
+      <div class="paper-head">
+        <div class="kicker">
+          <span class="chip green">SUSTAINABILITY · 2025</span>
+          <span class="chip">FY REPORT</span>
+          <span class="chip">PG. 14</span>
+        </div>
+        <h2 class="title hand" style="font-family:'Kalam',sans-serif">Powering forward,<br>measurably.</h2>
+        <p>A single-page snapshot of our solar portfolio — capacity, generation, avoided emissions, and the lives touched by the sun we captured this year.</p>
+        <div class="corner-mark">fig · 01 / 04</div>
+      </div>
+
+      <div class="v1-body">
+
+        <!-- hero row: narrative + donut -->
+        <div class="v1-hero">
+          <div>
+            <div class="headline">
+              We generated <em>482 GWh</em> of clean solar energy<br>
+              across <em>14 sites</em> — enough to power
+              <em>158,000 homes</em> for a year.
+            </div>
+            <div class="sub">
+              // placeholder narrative · 2–3 lines · replace with CEO pull-quote
+              or board-level commentary on the year's solar build-out
+            </div>
+          </div>
+
+          <!-- simple hand-drawn donut -->
+          <div class="v1-donut">
+            <svg viewBox="0 0 220 220" aria-label="energy mix donut placeholder">
+              <!-- outer hand-drawn frame -->
+              <rect x="1" y="1" width="218" height="218" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 4"/>
+              <!-- donut -->
+              <circle cx="110" cy="110" r="78" fill="none" stroke="#1a1a1a" stroke-width="22"/>
+              <!-- solar segment -->
+              <circle cx="110" cy="110" r="78" fill="none" stroke="oklch(0.72 0.12 145)" stroke-width="22"
+                stroke-dasharray="340 490" transform="rotate(-90 110 110)"/>
+              <!-- sun inner -->
+              <circle cx="110" cy="110" r="52" fill="oklch(0.95 0.06 85)" stroke="#1a1a1a" stroke-width="1.5"/>
+              <text x="110" y="104" text-anchor="middle" font-family="Kalam" font-weight="700" font-size="30" fill="#1a1a1a">68%</text>
+              <text x="110" y="126" text-anchor="middle" font-family="JetBrains Mono" font-size="9" fill="#5a5a5a" letter-spacing="2">SOLAR SHARE</text>
+              <!-- annotation -->
+              <text x="178" y="42" font-family="Caveat" font-size="15" fill="#5a5a5a">↑ vs 51% LY</text>
+            </svg>
+          </div>
+        </div>
+
+        <!-- 4-up KPI -->
+        <div class="grid-4">
+          <div class="cell stat">
+            <div class="chip sun" style="margin-bottom:8px">KPI · 01</div>
+            <div class="num">482</div>
+            <div class="unit">GWh generated</div>
+            <div class="lbl">a record year ✦</div>
+            <div class="delta">▲ +38% YoY</div>
+          </div>
+          <div class="cell stat">
+            <div class="chip sun" style="margin-bottom:8px">KPI · 02</div>
+            <div class="num">214<span style="font-size:22px">kt</span></div>
+            <div class="unit">CO₂e avoided</div>
+            <div class="lbl">≈ 47k cars off-road</div>
+            <div class="delta">▲ +41% YoY</div>
+          </div>
+          <div class="cell stat">
+            <div class="chip sun" style="margin-bottom:8px">KPI · 03</div>
+            <div class="num">158k</div>
+            <div class="unit">homes powered</div>
+            <div class="lbl">annual equivalent</div>
+            <div class="delta">▲ +36% YoY</div>
+          </div>
+          <div class="cell stat">
+            <div class="chip sun" style="margin-bottom:8px">KPI · 04</div>
+            <div class="num">1,240</div>
+            <div class="unit">jobs created</div>
+            <div class="lbl">direct + indirect</div>
+            <div class="delta">▲ +22% YoY</div>
+          </div>
+        </div>
+
+        <!-- charts row -->
+        <div class="v1-charts">
+          <div class="chart-card">
+            <div class="cap">FIG · A</div>
+            <h3>Generation by site — MWh, FY25</h3>
+            <div class="bar-rows">
+              <div class="bar-row"><span class="lbl">Mojave</span><div class="bar-track"><div class="bar-fill" style="width:92%"></div></div><span class="val">98,400</span></div>
+              <div class="bar-row"><span class="lbl">Atacama</span><div class="bar-track"><div class="bar-fill" style="width:78%"></div></div><span class="val">83,200</span></div>
+              <div class="bar-row"><span class="lbl">Jodhpur</span><div class="bar-track"><div class="bar-fill" style="width:64%"></div></div><span class="val">68,100</span></div>
+              <div class="bar-row"><span class="lbl">Andalucia</span><div class="bar-track"><div class="bar-fill" style="width:51%"></div></div><span class="val">54,900</span></div>
+              <div class="bar-row"><span class="lbl">Queensland</span><div class="bar-track"><div class="bar-fill" style="width:42%"></div></div><span class="val">45,200</span></div>
+              <div class="bar-row"><span class="lbl">+ 9 others</span><div class="bar-track"><div class="bar-fill" style="width:28%;background:#1a1a1a"></div></div><span class="val">132,000</span></div>
+            </div>
+          </div>
+          <div class="chart-card">
+            <div class="cap">FIG · B</div>
+            <h3>Cumulative MWh · 5-yr</h3>
+            <!-- sketchy line chart -->
+            <svg viewBox="0 0 280 160" style="width:100%;height:auto;margin-top:8px">
+              <rect x="6" y="6" width="268" height="130" fill="none" stroke="#9a9a9a" stroke-width="1" stroke-dasharray="3 4"/>
+              <!-- axis ticks -->
+              <g font-family="JetBrains Mono" font-size="8" fill="#5a5a5a">
+                <text x="10" y="150">'21</text>
+                <text x="70" y="150">'22</text>
+                <text x="130" y="150">'23</text>
+                <text x="190" y="150">'24</text>
+                <text x="250" y="150">'25</text>
+              </g>
+              <!-- area fill -->
+              <path d="M12 115 L70 100 L130 82 L190 56 L260 18 L260 136 L12 136 Z"
+                fill="oklch(0.92 0.05 145)" stroke="none"/>
+              <!-- line -->
+              <path d="M12 115 L70 100 L130 82 L190 56 L260 18"
+                fill="none" stroke="#1a1a1a" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+              <!-- nodes -->
+              <g fill="oklch(0.72 0.12 145)" stroke="#1a1a1a" stroke-width="1.2">
+                <circle cx="12" cy="115" r="3.5"/>
+                <circle cx="70" cy="100" r="3.5"/>
+                <circle cx="130" cy="82" r="3.5"/>
+                <circle cx="190" cy="56" r="3.5"/>
+                <circle cx="260" cy="18" r="4.5"/>
+              </g>
+              <text x="230" y="14" font-family="Caveat" font-size="13" fill="#1a1a1a">482 GWh</text>
+              <text x="14" y="128" font-family="Caveat" font-size="12" fill="#5a5a5a">← 108 GWh</text>
+            </svg>
+            <div class="v4-legend"><span><i style="background:oklch(0.72 0.12 145)"></i>solar</span><span><i style="background:#1a1a1a"></i>plan</span></div>
+          </div>
+        </div>
+
+        <!-- footer pledge -->
+        <div class="v1-foot">
+          <div class="pledge">
+            <div class="chip" style="margin-bottom:8px">COMMITMENT · 2030</div>
+            <div class="hand">Net-zero operations across 100% of owned assets<br>by <u>2030</u> — no offsets, no caveats.</div>
+          </div>
+          <div class="sig">
+            — Leadership Team<br>
+            <small>signed · Q4 2025</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================= -->
+    <!-- VARIATION 2 — EDITORIAL SPLIT                                  -->
+    <!-- ============================================================= -->
+    <section class="page panel" id="v2" data-screen-label="02 Editorial Split">
+      <div class="paper-head" style="padding-bottom:14px">
+        <div class="kicker">
+          <span class="chip green">SUSTAINABILITY 2025</span>
+          <span class="chip">COVER FEATURE</span>
+        </div>
+        <h2 class="title" style="font-size:38px">The year the<br>grid turned green.</h2>
+        <div class="corner-mark">fig · 02 / 04</div>
+      </div>
+
+      <!-- hero split -->
+      <div class="v2-hero">
+        <div class="left">
+          <div>
+            <div class="chip sun" style="margin-bottom:10px">HEADLINE NUMBER</div>
+            <div class="big">482<sup>GWh</sup></div>
+            <div class="u">Clean solar generation · FY25</div>
+          </div>
+          <div class="blurb">
+            Enough clean power to replace a mid-sized coal plant —
+            and then some. Every megawatt-hour displaced 444kg of CO₂
+            that never entered the atmosphere.
+          </div>
+        </div>
+        <div class="right">
+          <div class="scribble green">
+            [ hero photo placeholder ]<br>
+            aerial · flagship solar field · golden hour
+          </div>
+        </div>
+      </div>
+
+      <!-- 3 stats strip -->
+      <div class="v2-stats">
+        <div class="c stat">
+          <div class="arrow">▲ +41%</div>
+          <div class="num">214<span style="font-size:20px">kt</span></div>
+          <div class="unit">CO₂e AVOIDED</div>
+          <div class="lbl">= 47,000 cars off the road</div>
+        </div>
+        <div class="c stat">
+          <div class="arrow">▲ +36%</div>
+          <div class="num">158k</div>
+          <div class="unit">HOMES POWERED</div>
+          <div class="lbl">annual-equivalent basis</div>
+        </div>
+        <div class="c stat">
+          <div class="arrow">▲ +22%</div>
+          <div class="num">1,240</div>
+          <div class="unit">GREEN JOBS</div>
+          <div class="lbl">local hires, 9 countries</div>
+        </div>
+      </div>
+
+      <!-- editorial body -->
+      <div class="v2-body">
+        <div class="v2-lede">
+          <h3 class="title">A readable, investor-grade narrative</h3>
+          <p>
+            <span class="drop">W</span>
+            e closed FY25 with the largest single-year expansion of
+            solar capacity in company history — 14 active sites spanning
+            three continents, a combined 1.2 GW nameplate, and a
+            capacity factor that beat our five-year plan by 340 basis
+            points.
+          </p>
+          <p>
+            // placeholder paragraph · replace with narrative copy from
+            the sustainability team. Keep this column reserved for story,
+            context, and the human side of the impact numbers on the
+            right.
+          </p>
+          <p class="muted hand" style="font-size:16px">
+            — drop in pull-quote or executive commentary here —
+          </p>
+        </div>
+        <div class="v2-side">
+          <div class="chip sun" style="margin-bottom:10px">AT A GLANCE</div>
+          <div class="row"><span class="k">Capacity</span><span class="v">1.2 GW</span></div>
+          <div class="row"><span class="k">Active sites</span><span class="v">14</span></div>
+          <div class="row"><span class="k">Capacity factor</span><span class="v">28.4%</span></div>
+          <div class="row"><span class="k">PPA offtake</span><span class="v">96%</span></div>
+          <div class="row"><span class="k">Avg. LCOE</span><span class="v">$34/MWh</span></div>
+          <div class="row"><span class="k">Safety (TRIR)</span><span class="v">0.41</span></div>
+          <div class="row"><span class="k">Local hires</span><span class="v">74%</span></div>
+          <div style="margin-top:16px" class="hand" >
+            <span class="chip green">2030 TARGET</span>
+            <div style="font-family:'Caveat',cursive;font-size:22px;margin-top:6px;line-height:1.15">
+              3.5 GW installed · 1Mt CO₂ avoided annually
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ============================================================= -->
+    <!-- VARIATION 3 — TIMELINE / JOURNEY                               -->
+    <!-- ============================================================= -->
+    <section class="page panel" id="v3" data-screen-label="03 Timeline Journey">
+      <div class="paper-head">
+        <div class="kicker">
+          <span class="chip green">SUSTAINABILITY 2025</span>
+          <span class="chip">THE ROAD TO NET ZERO</span>
+        </div>
+        <h2 class="title">From first panel<br>to a gigawatt &amp; beyond.</h2>
+        <p>Our solar commitment, charted as a five-year journey with three more years of committed build-out — plus the impact delivered along the way.</p>
+        <div class="corner-mark">fig · 03 / 04</div>
+      </div>
+
+      <div class="v3-body">
+
+        <!-- 3-up hero -->
+        <div class="v3-top">
+          <div class="cell hero stat">
+            <div class="chip green" style="margin-bottom:6px">HEADLINE</div>
+            <div class="num">1.2 GW</div>
+            <div class="unit">installed solar capacity</div>
+            <div class="lbl">FY25 · up from 310 MW in '21</div>
+          </div>
+          <div class="cell stat">
+            <div class="num">14</div>
+            <div class="unit">active sites · 3 continents</div>
+          </div>
+          <div class="cell stat">
+            <div class="num">$2.1B</div>
+            <div class="unit">capex deployed · 5-yr</div>
+          </div>
+        </div>
+
+        <!-- journey track -->
+        <div class="v3-track">
+          <h3>↳ the journey, milestone by milestone</h3>
+
+          <div class="v3-line">
+            <!-- 2021 -->
+            <div class="v3-node" style="left:0%">1</div>
+            <div class="v3-label above" style="left:0%">
+              <div class="y">2021</div>
+              <div class="h">First panel installed</div>
+              <div class="n">Mojave · 120 MW</div>
+            </div>
+
+            <!-- 2022 -->
+            <div class="v3-node filled" style="left:22%">2</div>
+            <div class="v3-label below" style="left:22%">
+              <div class="y">2022</div>
+              <div class="h">Atacama goes live</div>
+              <div class="n">+ 240 MW, 1.8 capacity×</div>
+            </div>
+
+            <!-- 2023 -->
+            <div class="v3-node filled" style="left:44%">3</div>
+            <div class="v3-label above" style="left:44%">
+              <div class="y">2023</div>
+              <div class="h">Crossed 500 MW</div>
+              <div class="n">India + Spain online</div>
+            </div>
+
+            <!-- 2024 -->
+            <div class="v3-node filled" style="left:66%">4</div>
+            <div class="v3-label below" style="left:66%">
+              <div class="y">2024</div>
+              <div class="h">1st full-solar PPA</div>
+              <div class="n">24/7 carbon-free deal ✎</div>
+            </div>
+
+            <!-- 2025 -->
+            <div class="v3-node sun" style="left:88%">★</div>
+            <div class="v3-label above" style="left:88%">
+              <div class="y">2025 · TODAY</div>
+              <div class="h">1.2 GW · 482 GWh / yr</div>
+              <div class="n">← you are here</div>
+            </div>
+          </div>
+
+          <!-- forward target -->
+          <div style="display:flex;justify-content:space-between;align-items:center;margin:0 30px;padding-top:16px;border-top:1px dashed var(--pencil)">
+            <div class="hand" style="font-size:18px">Committed: <strong>+ 900 MW</strong> through FY27</div>
+            <div class="chip green">2030 · NET-ZERO OPS</div>
+          </div>
+        </div>
+
+        <!-- impact payoff strip -->
+        <div class="v3-impact">
+          <div class="c stat">
+            <div class="u">LIFETIME · SINCE 2021</div>
+            <div class="num">1.4 TWh</div>
+            <div class="l">clean energy delivered</div>
+          </div>
+          <div class="c stat">
+            <div class="u">LIFETIME</div>
+            <div class="num">620 kt</div>
+            <div class="l">CO₂e avoided, cumulative</div>
+          </div>
+          <div class="c stat">
+            <div class="u">LIFETIME</div>
+            <div class="num">460k</div>
+            <div class="l">homes served, equivalent</div>
+          </div>
+          <div class="c stat">
+            <div class="u">LIFETIME</div>
+            <div class="num">3,800</div>
+            <div class="l">jobs created · global</div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ============================================================= -->
+    <!-- VARIATION 4 — INVESTOR BRIEF (ledger + mini-charts)            -->
+    <!-- ============================================================= -->
+    <section class="page panel" id="v4" data-screen-label="04 Investor Brief">
+      <div class="paper-head">
+        <div class="kicker">
+          <span class="chip">ITEM 7A · SUSTAINABILITY</span>
+          <span class="chip green">ESG · SOLAR</span>
+        </div>
+        <h2 class="title">Solar portfolio —<br>a one-page investor brief.</h2>
+        <p>Financially-material disclosures alongside the operational and environmental story. Numbers indicative; replace with audited FY25 figures.</p>
+        <div class="corner-mark">fig · 04 / 04 · CONFIDENTIAL</div>
+      </div>
+
+      <div class="v4-body">
+
+        <!-- ledger strip -->
+        <div class="v4-ledger">
+          <div class="c">
+            <div class="k">CAPACITY</div>
+            <div class="v">1.2 GW</div>
+            <div class="n">↑ +38% YoY</div>
+          </div>
+          <div class="c">
+            <div class="k">GENERATION</div>
+            <div class="v">482 GWh</div>
+            <div class="n">capacity factor 28.4%</div>
+          </div>
+          <div class="c">
+            <div class="k">AVOIDED CO₂e</div>
+            <div class="v">214 kt</div>
+            <div class="n">Scope 2 equivalent</div>
+          </div>
+          <div class="c">
+            <div class="k">LCOE</div>
+            <div class="v">$34/MWh</div>
+            <div class="n">↓ -$6 vs FY24</div>
+          </div>
+          <div class="c">
+            <div class="k">CAPEX</div>
+            <div class="v">$580M</div>
+            <div class="n">100% financed green</div>
+          </div>
+        </div>
+
+        <!-- main grid -->
+        <div class="v4-main">
+          <div class="v4-chart">
+            <h3>Portfolio growth · installed MW by year</h3>
+            <div class="sub">FIG · C — 5-year with FY27 committed</div>
+
+            <!-- stacked sketch bars -->
+            <svg viewBox="0 0 480 200" class="v4-linechart" style="width:100%;height:auto">
+              <!-- frame -->
+              <line x1="30" y1="10" x2="30" y2="170" stroke="#1a1a1a" stroke-width="1.2"/>
+              <line x1="30" y1="170" x2="470" y2="170" stroke="#1a1a1a" stroke-width="1.2"/>
+              <!-- y ticks -->
+              <g font-family="JetBrains Mono" font-size="8" fill="#5a5a5a">
+                <text x="4" y="172">0</text>
+                <text x="2" y="128">500</text>
+                <text x="0" y="86">1000</text>
+                <text x="0" y="44">1500</text>
+                <text x="0" y="14">2100</text>
+              </g>
+              <!-- historical bars -->
+              <g>
+                <rect x="60"  y="144" width="40" height="26" fill="oklch(0.72 0.12 145)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="120" y="122" width="40" height="48" fill="oklch(0.72 0.12 145)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="180" y="98"  width="40" height="72" fill="oklch(0.72 0.12 145)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="240" y="68"  width="40" height="102" fill="oklch(0.72 0.12 145)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="300" y="48"  width="40" height="122" fill="oklch(0.72 0.12 145)" stroke="#1a1a1a" stroke-width="1"/>
+              </g>
+              <!-- committed (hollow) -->
+              <g>
+                <rect x="360" y="34"  width="40" height="136" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <rect x="420" y="14"  width="40" height="156" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3"/>
+              </g>
+              <!-- x labels -->
+              <g font-family="JetBrains Mono" font-size="9" fill="#1a1a1a" text-anchor="middle">
+                <text x="80" y="185">'21</text>
+                <text x="140" y="185">'22</text>
+                <text x="200" y="185">'23</text>
+                <text x="260" y="185">'24</text>
+                <text x="320" y="185">'25</text>
+                <text x="380" y="185">'26e</text>
+                <text x="440" y="185">'27e</text>
+              </g>
+              <text x="340" y="28" font-family="Caveat" font-size="14" fill="#5a5a5a">← committed</text>
+            </svg>
+            <div class="v4-legend">
+              <span><i style="background:oklch(0.72 0.12 145);border:1px solid #1a1a1a"></i>installed</span>
+              <span><i style="border:1.5px dashed #1a1a1a;height:8px"></i>committed</span>
+            </div>
+          </div>
+
+          <div class="v4-side">
+            <div class="v4-card accent">
+              <h4>Avoided emissions / $1M capex</h4>
+              <div class="big">369 t CO₂e</div>
+              <div class="u">BEST-IN-CLASS · INDUSTRY AVG 240 t</div>
+            </div>
+            <div class="v4-card">
+              <h4>Revenue from green PPAs</h4>
+              <div class="big">$412M</div>
+              <div class="u">96% CONTRACTED · AVG TENOR 14 YRS</div>
+            </div>
+            <div class="v4-card">
+              <h4>Green bond coverage</h4>
+              <div class="big">2.8×</div>
+              <div class="u">EU TAXONOMY ALIGNED</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- commitments -->
+        <div class="v4-goals">
+          <h3>✎ Our commitments, on the record</h3>
+          <ul>
+            <li><span class="y">BY 2027</span><br>3.5 GW installed solar capacity across all regions</li>
+            <li><span class="y">BY 2028</span><br>100% of new PPAs 24/7 carbon-free matched</li>
+            <li><span class="y">BY 2030</span><br>Net-zero operations · Scope 1 &amp; 2 with no offsets</li>
+            <li><span class="y">BY 2030</span><br>$5B cumulative green capex deployed</li>
+            <li><span class="y">BY 2035</span><br>Scope 3 supply chain net-zero (SBTi validated)</li>
+            <li><span class="y">ONGOING</span><br>≥70% local hires at every new site</li>
+          </ul>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- ============================================================= -->
+    <!-- VARIATION 5 — MERGED: V2 HERO + V4 LEDGER                       -->
+    <!-- ============================================================= -->
+    <section class="page panel" id="v5" data-screen-label="05 Merged Hero + Ledger">
+      <div class="paper-head" style="padding-bottom:14px">
+        <div class="kicker">
+          <span class="chip green">SUSTAINABILITY 2025</span>
+          <span class="chip">ITEM 7A · ESG</span>
+          <span class="chip">COVER</span>
+        </div>
+        <h2 class="title" style="font-size:40px">The year the<br>grid turned green.</h2>
+        <div class="corner-mark">fig · 05 · MERGED</div>
+      </div>
+
+      <!-- V2 HERO: big number + photo -->
+      <div class="v2-hero">
+        <div class="left">
+          <div>
+            <div class="chip sun" style="margin-bottom:10px">HEADLINE NUMBER</div>
+            <div class="big">482<sup>GWh</sup></div>
+            <div class="u">Clean solar generation · FY25</div>
+          </div>
+          <div class="blurb">
+            Enough clean power to replace a mid-sized coal plant —
+            and then some. Every megawatt-hour displaced 444kg of CO₂
+            that never entered the atmosphere.
+          </div>
+        </div>
+        <div class="right">
+          <div class="scribble green">
+            [ hero photo placeholder ]<br>
+            aerial · flagship solar field · golden hour
+          </div>
+        </div>
+      </div>
+
+      <!-- V4 LEDGER: 5-col ledger strip -->
+      <div style="padding:0 40px">
+        <div class="v4-ledger" style="margin:22px 0 0">
+          <div class="c">
+            <div class="k">CAPACITY</div>
+            <div class="v">1.2 GW</div>
+            <div class="n">↑ +38% YoY</div>
+          </div>
+          <div class="c">
+            <div class="k">GENERATION</div>
+            <div class="v">482 GWh</div>
+            <div class="n">cap. factor 28.4%</div>
+          </div>
+          <div class="c">
+            <div class="k">AVOIDED CO₂e</div>
+            <div class="v">214 kt</div>
+            <div class="n">≈ 47k cars off-road</div>
+          </div>
+          <div class="c">
+            <div class="k">LCOE</div>
+            <div class="v">$34/MWh</div>
+            <div class="n">↓ -$6 vs FY24</div>
+          </div>
+          <div class="c">
+            <div class="k">CAPEX</div>
+            <div class="v">$580M</div>
+            <div class="n">100% green-financed</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- V4 MAIN: chart + side cards -->
+      <div class="v4-body" style="padding-top:22px">
+        <div class="v4-main">
+          <div class="v4-chart">
+            <h3>Portfolio growth · installed MW by year</h3>
+            <div class="sub">FIG · C — 5-year with FY27 committed</div>
+
+            <svg viewBox="0 0 480 200" class="v4-linechart" style="width:100%;height:auto">
+              <line x1="30" y1="10" x2="30" y2="170" stroke="#1a1a1a" stroke-width="1.2"/>
+              <line x1="30" y1="170" x2="470" y2="170" stroke="#1a1a1a" stroke-width="1.2"/>
+              <g font-family="JetBrains Mono" font-size="8" fill="#5a5a5a">
+                <text x="4" y="172">0</text>
+                <text x="2" y="128">500</text>
+                <text x="0" y="86">1000</text>
+                <text x="0" y="44">1500</text>
+                <text x="0" y="14">2100</text>
+              </g>
+              <g>
+                <rect x="60"  y="144" width="40" height="26" fill="var(--accent)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="120" y="122" width="40" height="48" fill="var(--accent)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="180" y="98"  width="40" height="72" fill="var(--accent)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="240" y="68"  width="40" height="102" fill="var(--accent)" stroke="#1a1a1a" stroke-width="1"/>
+                <rect x="300" y="48"  width="40" height="122" fill="var(--accent)" stroke="#1a1a1a" stroke-width="1"/>
+              </g>
+              <g>
+                <rect x="360" y="34"  width="40" height="136" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3"/>
+                <rect x="420" y="14"  width="40" height="156" fill="none" stroke="#1a1a1a" stroke-width="1.5" stroke-dasharray="4 3"/>
+              </g>
+              <g font-family="JetBrains Mono" font-size="9" fill="#1a1a1a" text-anchor="middle">
+                <text x="80" y="185">'21</text>
+                <text x="140" y="185">'22</text>
+                <text x="200" y="185">'23</text>
+                <text x="260" y="185">'24</text>
+                <text x="320" y="185">'25</text>
+                <text x="380" y="185">'26e</text>
+                <text x="440" y="185">'27e</text>
+              </g>
+              <text x="340" y="28" font-family="Caveat" font-size="14" fill="#5a5a5a">← committed</text>
+            </svg>
+            <div class="v4-legend">
+              <span><i style="background:var(--accent);border:1px solid #1a1a1a"></i>installed</span>
+              <span><i style="border:1.5px dashed #1a1a1a;height:8px"></i>committed</span>
+            </div>
+          </div>
+
+          <div class="v4-side">
+            <div class="v4-card accent">
+              <h4>Avoided emissions / $1M capex</h4>
+              <div class="big">369 t CO₂e</div>
+              <div class="u">BEST-IN-CLASS · INDUSTRY AVG 240 t</div>
+            </div>
+            <div class="v4-card">
+              <h4>Revenue from green PPAs</h4>
+              <div class="big">$412M</div>
+              <div class="u">96% CONTRACTED · AVG TENOR 14 YRS</div>
+            </div>
+            <div class="v4-card">
+              <h4>Homes powered (annual-eq.)</h4>
+              <div class="big">158k</div>
+              <div class="u">▲ +36% YoY</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- V4 COMMITMENTS -->
+        <div class="v4-goals">
+          <h3>✎ Our commitments, on the record</h3>
+          <ul>
+            <li><span class="y">BY 2027</span><br>3.5 GW installed solar capacity across all regions</li>
+            <li><span class="y">BY 2028</span><br>100% of new PPAs 24/7 carbon-free matched</li>
+            <li><span class="y">BY 2030</span><br>Net-zero operations · Scope 1 &amp; 2, no offsets</li>
+            <li><span class="y">BY 2030</span><br>$5B cumulative green capex deployed</li>
+            <li><span class="y">BY 2035</span><br>Scope 3 supply chain net-zero (SBTi validated)</li>
+            <li><span class="y">ONGOING</span><br>≥70% local hires at every new site</li>
+          </ul>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+</div>
+
+<!-- TWEAKS -->
+<button class="tweak-toggle" id="tweakToggle">✎ Tweaks</button>
+<div class="tweaks" id="tweaksPanel">
+  <h4>Tweaks <button id="closeTweaks">×</button></h4>
+
+  <div class="grp">
+    <label>Accent</label>
+    <div class="row" id="accentRow">
+      <button class="swatch on" data-accent="145 0.12" style="background:oklch(0.72 0.12 145)"></button>
+      <button class="swatch" data-accent="85 0.14" style="background:oklch(0.82 0.14 85)"></button>
+      <button class="swatch" data-accent="200 0.10" style="background:oklch(0.72 0.10 200)"></button>
+      <button class="swatch" data-accent="30 0.13" style="background:oklch(0.75 0.13 30)"></button>
+      <button class="swatch" data-accent="0 0.00" style="background:#1a1a1a"></button>
+    </div>
+  </div>
+
+  <div class="grp">
+    <label>Paper</label>
+    <div class="row" id="paperRow">
+      <button class="opt on" data-paper="warm">warm</button>
+      <button class="opt" data-paper="cool">cool</button>
+      <button class="opt" data-paper="white">white</button>
+    </div>
+  </div>
+
+  <div class="grp">
+    <label>Handwriting</label>
+    <div class="row" id="handRow">
+      <button class="opt on" data-hand="Caveat">Caveat</button>
+      <button class="opt" data-hand="Kalam">Kalam</button>
+      <button class="opt" data-hand="Patrick Hand">Patrick</button>
+    </div>
+  </div>
+
+  <div class="grp">
+    <label>Grid paper</label>
+    <div class="row" id="gridRow">
+      <button class="opt on" data-grid="on">on</button>
+      <button class="opt" data-grid="off">off</button>
+    </div>
+  </div>
+
+  <div class="grp">
+    <label>Placeholders</label>
+    <div class="row" id="phRow">
+      <button class="opt on" data-ph="hatch">hatched</button>
+      <button class="opt" data-ph="flat">flat</button>
+    </div>
+  </div>
+</div>
+
+<script>
+  // tabs
+  const tabs = document.querySelectorAll('#tabs .tab');
+  const panels = document.querySelectorAll('.panel');
+  const sub = document.querySelector('.topbar .sub');
+  const subtitles = {v1:'v1 · stat grid · letter portrait', v2:'v2 · editorial · letter portrait', v3:'v3 · timeline · letter portrait', v4:'v4 · investor brief · letter portrait', v5:'v5 · merged · editorial hero + investor ledger'};
+  function go(id){
+    tabs.forEach(t=>t.classList.toggle('active', t.dataset.t===id));
+    panels.forEach(p=>p.classList.toggle('active', p.id===id));
+    sub.textContent = subtitles[id];
+    localStorage.setItem('sol_tab', id);
+    // notify for speaker-notes style
+    const idx = ['v1','v2','v3','v4','v5'].indexOf(id);
+    window.parent.postMessage({slideIndexChanged: idx}, '*');
+  }
+  tabs.forEach(t=>t.addEventListener('click', ()=>go(t.dataset.t)));
+  const saved = localStorage.getItem('sol_tab');
+  go(saved || 'v5');
+
+  // ---------- Tweaks ----------
+  const panel = document.getElementById('tweaksPanel');
+  const toggleBtn = document.getElementById('tweakToggle');
+  const closeBtn = document.getElementById('closeTweaks');
+  let tweakMode = false;
+  function openTweaks(){ panel.classList.add('open'); toggleBtn.style.display='none'; }
+  function closeTweaks(){ panel.classList.remove('open'); toggleBtn.style.display=''; }
+  toggleBtn.addEventListener('click', openTweaks);
+  closeBtn.addEventListener('click', closeTweaks);
+
+  // host toggles
+  window.addEventListener('message', e=>{
+    if(!e.data) return;
+    if(e.data.type==='__activate_edit_mode'){ tweakMode=true; openTweaks(); }
+    if(e.data.type==='__deactivate_edit_mode'){ tweakMode=false; closeTweaks(); }
+  });
+  window.parent.postMessage({type:'__edit_mode_available'},'*');
+
+  // apply tweaks
+  const TWEAK_DEFAULTS = /*EDITMODE-BEGIN*/{
+    "accent": "200 0.10",
+    "paper": "cool",
+    "hand": "Caveat",
+    "grid": "on",
+    "ph": "hatch"
+  }/*EDITMODE-END*/;
+  let state = {...TWEAK_DEFAULTS};
+
+  function apply(){
+    // accent
+    const [h,c] = state.accent.split(' ');
+    document.documentElement.style.setProperty('--accent', `oklch(0.72 ${c} ${h})`);
+    document.documentElement.style.setProperty('--accent-soft', `oklch(0.92 ${Math.min(parseFloat(c), 0.06)} ${h})`);
+
+    // paper
+    const papers = {
+      warm: {paper:'#fafaf6', warm:'#f4f1e8', app:'#e9e7df'},
+      cool: {paper:'#f6f8fa', warm:'#e9eef2', app:'#dfe4ea'},
+      white:{paper:'#ffffff', warm:'#f2f2f2', app:'#e4e4e4'}
+    };
+    const p = papers[state.paper] || papers.warm;
+    document.documentElement.style.setProperty('--paper', p.paper);
+    document.documentElement.style.setProperty('--paper-warm', p.warm);
+    document.body.style.background = p.app;
+
+    // handwriting
+    document.querySelectorAll('.hand, .tweaks h4, .v3-track h3, .v1-hero .sub').forEach(el=>{
+      el.style.fontFamily = `"${state.hand}", cursive`;
+    });
+
+    // grid
+    document.querySelectorAll('.page').forEach(pg=>{
+      pg.style.setProperty('--grid-opacity', state.grid==='on'?1:0);
+    });
+    document.querySelectorAll('.page').forEach(pg=>{
+      pg.style.setProperty('background-image', state.grid==='on'?'':'none');
+    });
+    const styleTagId='_gridToggle';
+    let st = document.getElementById(styleTagId);
+    if(!st){ st=document.createElement('style'); st.id=styleTagId; document.head.appendChild(st); }
+    st.textContent = state.grid==='on'
+      ? ''
+      : `.page::before{display:none!important}`;
+
+    // placeholders
+    const phId='_phStyle';
+    let ph = document.getElementById(phId);
+    if(!ph){ ph=document.createElement('style'); ph.id=phId; document.head.appendChild(ph); }
+    ph.textContent = state.ph==='flat'
+      ? `.scribble{background-image:none!important;background-color:#eaeae3!important} .scribble.green{background-color:var(--accent-soft)!important}`
+      : '';
+
+    // highlight tweak UI
+    document.querySelectorAll('#accentRow .swatch').forEach(s=>s.classList.toggle('on', s.dataset.accent===state.accent));
+    document.querySelectorAll('#paperRow .opt').forEach(o=>o.classList.toggle('on', o.dataset.paper===state.paper));
+    document.querySelectorAll('#handRow .opt').forEach(o=>o.classList.toggle('on', o.dataset.hand===state.hand));
+    document.querySelectorAll('#gridRow .opt').forEach(o=>o.classList.toggle('on', o.dataset.grid===state.grid));
+    document.querySelectorAll('#phRow .opt').forEach(o=>o.classList.toggle('on', o.dataset.ph===state.ph));
+  }
+  function setKey(k,v){
+    state[k]=v; apply();
+    window.parent.postMessage({type:'__edit_mode_set_keys', edits:{[k]:v}}, '*');
+  }
+  document.querySelectorAll('#accentRow .swatch').forEach(s=>s.addEventListener('click',()=>setKey('accent', s.dataset.accent)));
+  document.querySelectorAll('#paperRow .opt').forEach(o=>o.addEventListener('click',()=>setKey('paper', o.dataset.paper)));
+  document.querySelectorAll('#handRow .opt').forEach(o=>o.addEventListener('click',()=>setKey('hand', o.dataset.hand)));
+  document.querySelectorAll('#gridRow .opt').forEach(o=>o.addEventListener('click',()=>setKey('grid', o.dataset.grid)));
+  document.querySelectorAll('#phRow .opt').forEach(o=>o.addEventListener('click',()=>setKey('ph', o.dataset.ph)));
+
+  // late-load Patrick Hand if selected
+  const patrickLink = document.createElement('link');
+  patrickLink.rel='stylesheet';
+  patrickLink.href='https://fonts.googleapis.com/css2?family=Patrick+Hand&display=swap';
+  document.head.appendChild(patrickLink);
+
+  apply();
+</script>
+</body>
+</html>
