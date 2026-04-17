@@ -1,0 +1,482 @@
+/* SDG Shortfall Explainer — editorial, Arial, official SDG goal colors */
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html, body {
+  font-family: Arial, Helvetica, sans-serif;
+  background: #f5f2ea;
+  color: #111;
+  -webkit-font-smoothing: antialiased;
+  font-feature-settings: "kern" 1, "liga" 1, "tnum" 1;
+  letter-spacing: -0.005em;
+}
+
+/* ---------- Layout frame ---------- */
+.frame {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 56px 64px 120px;
+}
+
+/* ---------- Masthead ---------- */
+.masthead {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1.5px solid #111;
+  padding-bottom: 14px;
+  margin-bottom: 48px;
+}
+.masthead .slug {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+.masthead .date {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: #555;
+}
+
+/* ---------- Hero ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: 1fr 420px;
+  gap: 80px;
+  margin-bottom: 88px;
+}
+.eyebrow {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #8b2f2f;
+  margin-bottom: 24px;
+}
+.headline {
+  font-size: 68px;
+  line-height: 0.98;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  margin-bottom: 28px;
+  text-wrap: balance;
+}
+.headline em {
+  font-style: normal;
+  background: #111;
+  color: #f5f2ea;
+  padding: 0 8px;
+}
+.deck {
+  font-size: 18px;
+  line-height: 1.5;
+  color: #333;
+  max-width: 560px;
+  text-wrap: pretty;
+}
+.deck + .deck { margin-top: 14px; }
+
+.hero-stat {
+  border-left: 1.5px solid #111;
+  padding-left: 24px;
+  align-self: end;
+}
+.hero-stat .big {
+  font-size: 96px;
+  line-height: 0.9;
+  font-weight: 700;
+  letter-spacing: -0.04em;
+  margin-bottom: 10px;
+}
+.hero-stat .label {
+  font-size: 13px;
+  line-height: 1.35;
+  color: #333;
+}
+.hero-stat .sub {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #8b2f2f;
+  margin-top: 10px;
+}
+
+/* ---------- Section header ---------- */
+.section-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  border-bottom: 1px solid #111;
+  padding-bottom: 10px;
+  margin-bottom: 28px;
+}
+.section-head h2 {
+  font-size: 22px;
+  font-weight: 700;
+  letter-spacing: -0.01em;
+}
+.section-head .note {
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Legend ---------- */
+.legend {
+  display: flex;
+  gap: 28px;
+  margin-bottom: 24px;
+  font-size: 11px;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: #444;
+}
+.legend .swatch {
+  display: inline-block;
+  width: 10px; height: 10px;
+  margin-right: 8px;
+  vertical-align: -1px;
+}
+
+/* ---------- Goal grid ---------- */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 1px;
+  background: #111;
+  border: 1px solid #111;
+}
+.goal {
+  position: relative;
+  background: #fff;
+  padding: 18px 16px 16px;
+  cursor: pointer;
+  transition: transform 0.15s ease, background 0.15s ease;
+  min-height: 180px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+.goal:hover { background: #faf7ef; }
+.goal.active { background: #111; color: #f5f2ea; }
+.goal.active .goal-num,
+.goal.active .goal-title,
+.goal.active .goal-progress-label,
+.goal.active .goal-pct { color: #f5f2ea; }
+.goal.active .bar { background: rgba(255,255,255,0.15); }
+
+.goal-top { display: flex; justify-content: space-between; align-items: flex-start; }
+.goal-num {
+  font-size: 32px;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1;
+}
+.goal-chip {
+  width: 10px;
+  height: 10px;
+  border-radius: 0;
+}
+.goal-title {
+  font-size: 13px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin-top: 10px;
+  text-wrap: balance;
+}
+
+.goal-bar-wrap { margin-top: 14px; }
+.goal-progress-label {
+  display: flex;
+  justify-content: space-between;
+  font-size: 10px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 6px;
+}
+.goal-pct { font-weight: 700; color: #111; }
+.bar {
+  height: 6px;
+  background: #eee;
+  position: relative;
+  overflow: hidden;
+}
+.bar-fill {
+  height: 100%;
+  transition: width 0.6s cubic-bezier(.2,.7,.2,1);
+}
+.bar-target {
+  position: absolute;
+  top: -2px; bottom: -2px;
+  width: 1px;
+  background: #111;
+  left: 100%;
+}
+
+.goal-status {
+  margin-top: 10px;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+.status-critical  { color: #8b2f2f; }
+.status-off       { color: #8b2f2f; }
+.status-reversing { color: #8b2f2f; }
+.status-mixed     { color: #8a6b1d; }
+.status-partial   { color: #3a6b3a; }
+.goal.active .goal-status { color: inherit; opacity: 0.7; }
+
+/* ---------- Grid span for highlighted critical ---------- */
+.goal[data-status="critical"]::before {
+  content: "▲";
+  position: absolute;
+  top: 14px; right: 14px;
+  font-size: 9px;
+  color: #8b2f2f;
+}
+
+/* ---------- Detail panel ---------- */
+.detail {
+  margin-top: 48px;
+  display: grid;
+  grid-template-columns: 340px 1fr;
+  gap: 0;
+  border: 1px solid #111;
+  min-height: 420px;
+}
+.detail-left {
+  padding: 36px 32px;
+  color: #fff;
+  position: relative;
+}
+.detail-left .num {
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.85;
+  margin-bottom: 16px;
+}
+.detail-left .title {
+  font-size: 38px;
+  font-weight: 700;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  margin-bottom: 24px;
+  text-wrap: balance;
+}
+.detail-left .target {
+  font-size: 12px;
+  line-height: 1.5;
+  opacity: 0.9;
+  border-top: 1px solid rgba(255,255,255,0.3);
+  padding-top: 14px;
+  margin-top: auto;
+}
+
+.detail-right {
+  background: #fff;
+  padding: 36px 40px;
+  display: flex;
+  flex-direction: column;
+}
+.detail-right .pull {
+  font-size: 30px;
+  font-weight: 700;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+  margin-bottom: 32px;
+  text-wrap: balance;
+  max-width: 640px;
+}
+
+.kpi-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0;
+  border-top: 1px solid #111;
+  border-bottom: 1px solid #111;
+}
+.kpi {
+  padding: 18px 20px;
+  border-right: 1px solid #ddd;
+}
+.kpi:last-child { border-right: 0; }
+.kpi .k-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 8px;
+}
+.kpi .k-value {
+  font-size: 28px;
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+.kpi .k-sub {
+  font-size: 11px;
+  color: #555;
+  margin-top: 4px;
+}
+
+.gap-viz {
+  margin-top: 24px;
+  flex: 1;
+}
+.gap-viz .gap-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #666;
+  margin-bottom: 12px;
+  display: flex;
+  justify-content: space-between;
+}
+.gap-bar {
+  position: relative;
+  height: 28px;
+  background: #eee;
+}
+.gap-bar-fill {
+  height: 100%;
+  transition: width 0.8s cubic-bezier(.2,.7,.2,1);
+}
+.gap-bar-gap {
+  position: absolute;
+  top: 0; bottom: 0;
+  background: repeating-linear-gradient(-45deg, rgba(139,47,47,0.15) 0 6px, rgba(139,47,47,0.25) 6px 12px);
+}
+.gap-bar-target-line {
+  position: absolute;
+  top: -8px; bottom: -8px;
+  width: 2px;
+  background: #111;
+  right: 0;
+}
+.gap-bar-target-line::after {
+  content: "2030 TARGET";
+  position: absolute;
+  top: -18px;
+  right: 0;
+  font-size: 9px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  white-space: nowrap;
+}
+
+.shortfall-callout {
+  margin-top: 20px;
+  padding: 14px 16px;
+  background: #111;
+  color: #f5f2ea;
+  font-size: 13px;
+  line-height: 1.45;
+}
+.shortfall-callout strong {
+  display: block;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #e8a5a5;
+  margin-bottom: 6px;
+}
+
+/* ---------- Foot / source strip ---------- */
+.footstrip {
+  margin-top: 56px;
+  border-top: 1.5px solid #111;
+  padding-top: 14px;
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: #555;
+  letter-spacing: 0.04em;
+}
+
+/* ---------- Tweaks panel ---------- */
+.tweaks-panel {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  background: #fff;
+  border: 1.5px solid #111;
+  padding: 18px 20px;
+  width: 280px;
+  box-shadow: 8px 8px 0 #111;
+  z-index: 100;
+  display: none;
+}
+.tweaks-panel.on { display: block; }
+.tweaks-panel h4 {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid #111;
+}
+.tweaks-panel .tw-label {
+  font-size: 10px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: #555;
+  margin-bottom: 6px;
+  margin-top: 12px;
+}
+.tweaks-panel select {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid #111;
+  background: #f5f2ea;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  cursor: pointer;
+  appearance: none;
+  background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 6'%3e%3cpath d='M0 0l5 6 5-6z' fill='%23111'/%3e%3c/svg%3e");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 10px;
+  padding-right: 32px;
+}
+.tweaks-panel .tw-hint {
+  font-size: 11px;
+  color: #555;
+  margin-top: 12px;
+  line-height: 1.4;
+}
+
+/* ---------- Active region tag ---------- */
+.region-tag {
+  display: inline-block;
+  padding: 3px 8px;
+  background: #111;
+  color: #f5f2ea;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  margin-left: 10px;
+  vertical-align: 3px;
+}
+
+/* ---------- Scroll hint ---------- */
+@media (max-width: 1100px) {
+  .hero { grid-template-columns: 1fr; gap: 40px; }
+  .headline { font-size: 52px; }
+  .grid { grid-template-columns: repeat(4, 1fr); }
+  .detail { grid-template-columns: 1fr; }
+}
+@media (max-width: 720px) {
+  .frame { padding: 32px 24px 80px; }
+  .headline { font-size: 40px; }
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
